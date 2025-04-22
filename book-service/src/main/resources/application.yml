@@ -33,3 +33,11 @@ mybatis-plus:
       # logic-delete-field: deleted # 逻辑删除字段名(实体类字段名)
       # logic-delete-value: 1 # 逻辑已删除值(默认为 1)
       # logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+
+# eureka client 相关配置
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8401/eureka

@@ -1,0 +1,20 @@
+# 服务器相关配置
+server:
+  servlet:
+    context-path: / # 为了便于开发此处省略应用程序上下文
+  port: 8401 # 为了便于开发此处使用 http 默认端口
+
+# spring 相关配置
+spring:
+  application:
+    name: eureka-server
+
+# eureka server 相关配置
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: false # 作为服务器角色不需要获取服务器
+    register-with-eureka: false # 作为服务器角色不需要向 eureka server 注册自己
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka
