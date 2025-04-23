@@ -7,9 +7,10 @@ import org.qiaice.entity.Borrow;
 import org.qiaice.entity.User;
 import org.qiaice.mapper.BorrowMapper;
 import org.qiaice.service.BorrowService;
+import org.qiaice.service.client.BookClient;
+import org.qiaice.service.client.UserClient;
 import org.qiaice.vo.UserBorrowVO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -17,14 +18,15 @@ import java.util.List;
 @AllArgsConstructor
 public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> implements BorrowService {
 
-    private final RestTemplate template;
+    private final UserClient userClient;
+    private final BookClient bookClient;
 
     @Override
     public UserBorrowVO findByUid(Integer uid) {
         List<Borrow> borrows = lambdaQuery().eq(Borrow::getUid, uid).list();
-        User user = template.getForObject("http://user-service/api/user/" + uid, User.class);
+        User user = userClient.findByUid(uid);
         List<Book> books = borrows.stream()
-                .map(borrow -> template.getForObject("http://book-service/api/book/" + borrow.getBid(), Book.class))
+                .map(borrow -> bookClient.findByBid(borrow.getBid()))
                 .toList();
         return new UserBorrowVO(user, books);
     }
