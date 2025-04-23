@@ -1,0 +1,25 @@
+# 服务器相关配置
+server:
+  servlet:
+    context-path: / # 为了便于开发此处省略应用程序上下文
+  port: 8501 # 为了便于开发此处使用 http 默认端口
+
+# spring 相关配置
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      routes:
+        - id: borrow-service
+          uri: lb://borrow-service # lb 代表启用负载均衡, 也可以使用 http 正常转发, 但是需要明确 id:port
+          predicates:
+            - Path=/api/borrow/**
+
+# eureka client 相关配置
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8401/eureka
