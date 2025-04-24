@@ -15,6 +15,8 @@ spring:
           uri: lb://borrow-service # lb 代表启用负载均衡, 也可以使用 http 正常转发, 但是需要明确 id:port
           predicates:
             - Path=/api/borrow/**
+          filters: # 局部路由器, order 从 1 开始并逐步增大
+            - AddRequestHeader=X-Request-Color,blue
 
 # eureka client 相关配置
 eureka:
