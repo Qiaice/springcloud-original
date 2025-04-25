@@ -1,0 +1,8 @@
+# spring 相关配置
+spring:
+  cloud:
+    config:
+      name: book-service
+      uri: http://localhost:8601
+      profile: dev
+      label: master

@@ -1,0 +1,24 @@
+# 服务器相关配置
+server:
+  servlet:
+    context-path: / # 为了便于开发此处省略应用程序上下文
+  port: 8601 # 为了便于开发此处使用 http 默认端口
+
+# spring 相关配置
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          uri: file://F:/home/tsubaki/.config/springcloud
+          default-label: master
+
+# eureka client 相关配置
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:8401/eureka

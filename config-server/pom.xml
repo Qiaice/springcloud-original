@@ -8,33 +8,20 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <artifactId>book-service</artifactId>
+  <artifactId>config-server</artifactId>
   <packaging>jar</packaging>
 
-  <name>book-service</name>
-  <description>book-service</description>
+  <name>config-server</name>
+  <description>config-server</description>
 
   <dependencies>
-    <dependency>
-      <groupId>org.qiaice</groupId>
-      <artifactId>commons-entity</artifactId>
-      <version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
     </dependency>
     <dependency>
       <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-config-client</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.cloud</groupId>
-      <artifactId>spring-cloud-starter-bootstrap</artifactId>
+      <artifactId>spring-cloud-config-server</artifactId>
     </dependency>
   </dependencies>
 </project>
