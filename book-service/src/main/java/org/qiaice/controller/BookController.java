@@ -19,4 +19,15 @@ public class BookController {
     public Book findByBid(@PathVariable Integer bid) {
         return bookService.getById(bid);
     }
+
+    @GetMapping(value = "/count/{bid}")
+    public Integer getCountByBid(@PathVariable Integer bid) {
+        return bookService.getById(bid).getCount();
+    }
+
+    @GetMapping(value = "/borrow/{bid}")
+    public Boolean borrow(@PathVariable Integer bid) {
+        Integer count = bookService.getById(bid).getCount();
+        return bookService.lambdaUpdate().set(Book::getCount, count - 1).eq(Book::getBid, bid).update();
+    }
 }

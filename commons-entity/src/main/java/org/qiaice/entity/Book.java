@@ -16,5 +16,5 @@ public class Book {
     @TableField(value = "`desc`")
     private String desc;
 
-    private Integer hold;
+    private Integer count;
 }

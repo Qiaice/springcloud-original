@@ -10,4 +10,10 @@ public interface BookClient {
 
     @GetExchange(value = "/{bid}")
     Book findByBid(@PathVariable Integer bid);
+
+    @GetExchange(value = "/count/{bid}")
+    Integer getCountByBid(@PathVariable Integer bid);
+
+    @GetExchange(value = "/borrow/{bid}")
+    Boolean borrow(@PathVariable Integer bid);
 }

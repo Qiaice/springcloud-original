@@ -30,4 +30,27 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
                 .toList();
         return new UserBorrowVO(user, books);
     }
+
+    @Override
+    public void borrow(Integer uid, Integer bid) {
+        if (bookClient.getCountByBid(bid) < 1) {
+            throw new RuntimeException("图书数量不足");
+        }
+        if (userClient.getHoldByUid(uid) > 2) {
+            throw new RuntimeException("用户借阅量已达上限");
+        }
+        if (!bookClient.borrow(bid)) {
+            throw new RuntimeException("在借阅图书时发生错误");
+        }
+        Borrow borrow = lambdaQuery().eq(Borrow::getUid, uid).eq(Borrow::getBid, bid).one();
+        if (borrow != null) {
+            throw new RuntimeException("此书籍已被此用户借阅");
+        }
+        if (!save(new Borrow(null, uid, bid))) {
+            throw new RuntimeException("在录入借阅信息是发生错误");
+        }
+        if (!userClient.borrow(uid)) {
+            throw new RuntimeException("在用户借阅图书时发生错误");
+        }
+    }
 }

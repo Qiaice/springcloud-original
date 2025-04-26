@@ -19,6 +19,3 @@ spring:
         namespace: 01224154-d186-4837-85a0-7a3de9602b82
       config:
         namespace: 01224154-d186-4837-85a0-7a3de9602b82
-    sentinel:
-      transport:
-        dashboard: localhost:8858

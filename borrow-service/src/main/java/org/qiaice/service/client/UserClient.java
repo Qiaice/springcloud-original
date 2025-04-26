@@ -10,4 +10,10 @@ public interface UserClient {
 
     @GetExchange(value = "/{uid}")
     User findByUid(@PathVariable Integer uid);
+
+    @GetExchange(value = "/hold/{uid}")
+    Integer getHoldByUid(@PathVariable Integer uid);
+
+    @GetExchange(value = "/borrow/{uid}")
+    Boolean borrow(@PathVariable Integer uid);
 }

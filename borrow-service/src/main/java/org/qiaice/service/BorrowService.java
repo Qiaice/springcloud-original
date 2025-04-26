@@ -7,4 +7,6 @@ import org.qiaice.vo.UserBorrowVO;
 public interface BorrowService extends IService<Borrow> {
 
     UserBorrowVO findByUid(Integer uid);
+
+    void borrow(Integer uid, Integer bid);
 }
