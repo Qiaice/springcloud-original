@@ -2,6 +2,7 @@ package org.qiaice.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import lombok.AllArgsConstructor;
+import org.apache.seata.spring.annotation.GlobalTransactional;
 import org.qiaice.entity.Book;
 import org.qiaice.entity.Borrow;
 import org.qiaice.entity.User;
@@ -32,6 +33,7 @@ public class BorrowServiceImpl extends ServiceImpl<BorrowMapper, Borrow> impleme
     }
 
     @Override
+    @GlobalTransactional
     public void borrow(Integer uid, Integer bid) {
         if (bookClient.getCountByBid(bid) < 1) {
             throw new RuntimeException("图书数量不足");

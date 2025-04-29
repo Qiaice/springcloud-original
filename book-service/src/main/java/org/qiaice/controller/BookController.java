@@ -3,6 +3,7 @@ package org.qiaice.controller;
 import lombok.AllArgsConstructor;
 import org.qiaice.entity.Book;
 import org.qiaice.service.BookService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class BookController {
         return bookService.getById(bid).getCount();
     }
 
+    @Transactional
     @GetMapping(value = "/borrow/{bid}")
     public Boolean borrow(@PathVariable Integer bid) {
         Integer count = bookService.getById(bid).getCount();

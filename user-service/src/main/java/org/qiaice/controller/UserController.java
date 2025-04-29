@@ -3,6 +3,7 @@ package org.qiaice.controller;
 import lombok.AllArgsConstructor;
 import org.qiaice.entity.User;
 import org.qiaice.service.UserService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ public class UserController {
         return userService.getById(uid).getHold();
     }
 
+    @Transactional
     @GetMapping(value = "/borrow/{uid}")
     public Boolean borrow(@PathVariable Integer uid) {
         Integer hold = userService.getById(uid).getHold();

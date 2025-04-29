@@ -1,19 +1,19 @@
 package org.qiaice.service.client;
 
 import org.qiaice.entity.User;
+import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.service.annotation.GetExchange;
-import org.springframework.web.service.annotation.HttpExchange;
 
-@HttpExchange(value = "/api/user")
+@FeignClient(value = "user-service")
 public interface UserClient {
 
-    @GetExchange(value = "/{uid}")
+    @GetMapping(value = "/api/user/{uid}")
     User findByUid(@PathVariable Integer uid);
 
-    @GetExchange(value = "/hold/{uid}")
+    @GetMapping(value = "/api/user/hold/{uid}")
     Integer getHoldByUid(@PathVariable Integer uid);
 
-    @GetExchange(value = "/borrow/{uid}")
+    @GetMapping(value = "/api/user/borrow/{uid}")
     Boolean borrow(@PathVariable Integer uid);
 }
