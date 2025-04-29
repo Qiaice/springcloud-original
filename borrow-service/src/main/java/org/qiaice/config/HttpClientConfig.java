@@ -16,12 +16,6 @@ import org.springframework.web.service.invoker.HttpServiceProxyFactory;
 public class HttpClientConfig {
 
     @Bean
-    @LoadBalanced
-    public RestClient.Builder restClientBuilder() {
-        return RestClient.builder();
-    }
-
-    @Bean
     public ClientHttpRequestInterceptor clientHttpRequestInterceptor() {
         return (request, bytes, execution) -> {
             request.getHeaders().add("TX_XID", RootContext.getXID());
@@ -30,24 +24,26 @@ public class HttpClientConfig {
     }
 
     @Bean
-    public UserClient userClient(
-            RestClient.Builder builder,
+    @LoadBalanced
+    public RestClient.Builder restClientBuilder(
             @Qualifier("clientHttpRequestInterceptor") ClientHttpRequestInterceptor interceptor
     ) {
-        RestClient client = builder.requestInterceptor(interceptor).baseUrl("http://user-service").build();
-        RestClientAdapter adapter = RestClientAdapter.create(client);
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+        return RestClient.builder().requestInterceptor(interceptor);
+    }
+
+    @Bean
+    public HttpServiceProxyFactory httpServiceProxyFactory(RestClient.Builder builder) {
+        RestClientAdapter adapter = RestClientAdapter.create(builder.build());
+        return HttpServiceProxyFactory.builderFor(adapter).build();
+    }
+
+    @Bean
+    public UserClient userClient(HttpServiceProxyFactory factory) {
         return factory.createClient(UserClient.class);
     }
 
     @Bean
-    public BookClient bookClient(
-            RestClient.Builder builder,
-            @Qualifier("clientHttpRequestInterceptor") ClientHttpRequestInterceptor interceptor
-    ) {
-        RestClient client = builder.requestInterceptor(interceptor).baseUrl("http://book-service").build();
-        RestClientAdapter adapter = RestClientAdapter.create(client);
-        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+    public BookClient bookClient(HttpServiceProxyFactory factory) {
         return factory.createClient(BookClient.class);
     }
 }
