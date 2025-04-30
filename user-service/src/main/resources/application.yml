@@ -12,6 +12,7 @@ spring:
     import:
       - optional:nacos:mybatis-plus-dev.yml?refreshEnabled=true
       - optional:nacos:datasource-dev.yml?refreshEnabled=true
+      - optional:nacos:seata-client-dev.yml?refreshEnabled=true
   cloud:
     nacos:
       server-addr: localhost:8848
@@ -21,10 +22,3 @@ spring:
         namespace: 01224154-d186-4837-85a0-7a3de9602b82
       config:
         namespace: 01224154-d186-4837-85a0-7a3de9602b82
-
-seata:
-  service:
-    vgroup-mapping:
-      default_tx_group: default
-    grouplist:
-      default: localhost:8868
