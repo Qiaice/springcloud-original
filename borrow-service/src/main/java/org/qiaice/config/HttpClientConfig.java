@@ -18,7 +18,7 @@ public class HttpClientConfig {
     @Bean
     public ClientHttpRequestInterceptor clientHttpRequestInterceptor() {
         return (request, bytes, execution) -> {
-            request.getHeaders().add("TX_XID", RootContext.getXID());
+            request.getHeaders().add(RootContext.KEY_XID, RootContext.getXID());
             return execution.execute(request, bytes);
         };
     }
